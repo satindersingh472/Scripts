@@ -1,0 +1,10 @@
+echo "Hey , looks like you are a little lost, Let's get you back on track.";
+echo "You are currently inside of this folder";
+pwd
+echo "The contents of the current folder are";
+ls -l;
+echo "Here are some helpful tips that might help you when you're lost";
+echo "If you ever want to go to your home directory, type 'cd' and hit enter";
+echo "If you ever want to see the contents of the current folder, type 'ls' and hit enter";
+echo "If you ever want to see the current folder you are in, type 'pwd' and hit enter";
+echo "If you ever want to go up one folder into the parent, type 'cd../' and hit enter";

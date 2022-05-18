@@ -1,0 +1,3 @@
+echo "Onward and Upward! Beep boop beep boop, calculating, calculating. Target acquired!";
+curl "http://www.randomnumberapi.com/api/v1.0/random?min=0&max=100";
+echo "There is your number treat it well";

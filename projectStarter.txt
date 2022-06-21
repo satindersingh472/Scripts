@@ -1,6 +1,6 @@
 #!/bin/bash;
-mkdir  basicProject;
-cd basicProject;
+mkdir $1;
+cd $1;
 touch index.html;
 echo 'Creating a new project'
 echo "<!DOCTYPE html>
@@ -9,22 +9,52 @@ echo "<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+   
+  
+    <meta http-equiv=X-UA-Compatible content=IE=edge>
+    <meta name=viewport content=width=device-width, initial-scale=1.0>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="satinder singh">
+
+    <meta property="og:url" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:title" content="W" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="" />
+    <meta name="twitter:creator" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content=""/>
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+ 
+    <title>$1</title>
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
-<h1>my name is $1</h1>    
+
 </body>
-</html>">> index.html
-mkdir CSS/;
-cd CSS/;
-touch style.css;
+</html>">> index.html;
+mkdir css/;
+cd css/;
+touch style.scss;
 cd ../;
 mkdir js/;
 cd js/;
 touch app.js;
 cd ../;
 echo 'All Done!';
-cd ../;
-mv basicProject $1;
-echo "The cuurent file name is projectStarter";
-echo "This script will create index.html file, css file and js file";
+echo "The cuurent folder name is $1";
+echo "This script will create index.html file, css file and js file and readme file";
+touch readMe.md
+echo "This is a $1 project" >> readMe.md;
+git init;
+git add -A;
+git commit -m"Added readme file";
+git remote add origin https://github.com/satindersingh472/$1.git;
+git branch -M main;
+git push -u origin main;

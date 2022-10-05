@@ -1,0 +1,49 @@
+mkdir $1;
+cd $1;
+echo " This is the $1" > readme.txt;
+echo ".vscode" > .gitignore;
+echo "venv" >> .gitignore;
+echo "dbcreds.py" >> .gitignore;
+echo "host = 'localhost'" > dbcreds.py;
+echo "user = 'root'" >> dbcreds.py;
+echo "password = 'Sandhu772'" >> dbcreds.py;
+echo "port = 3306" >> dbcreds.py;
+echo "database = '$1'" >> dbcreds.py;
+echo "from dataclasses import dataclass
+import mariadb
+import dbcreds
+
+def connect_db():
+    conn = mariadb.connect(user=dbcreds.user,host=dbcreds.host, password=dbcreds.password,port=dbcreds.port,database=dbcreds.database)
+    cursor = conn.cursor()
+    return cursor
+
+def execute_statement(cursor,statement,list=[]):
+    cursor.execute(statement,list)
+    result = cursor.fetchall()
+    return result
+
+def close_connection(cursor):
+    conn = cursor.connection
+    cursor.close()
+    conn.close()
+
+def conn_exe_close(statement,list):
+    cursor = connect_db()
+    result = execute_statement(cursor,statement,list)
+    close_connection(cursor)
+    return result" > dbhelpers.py;
+echo "from dbhelpers import conn_exe_close
+from flask import Flask
+import json
+
+app = Flask(__name__)" > app.py;
+python3 -m venv venv;
+source venv/bin/activate;
+pip install mariadb flask;
+git init;
+git add -A;
+git commit -m"started the project $1";
+git remote add origin https://github.com/satindersingh472/$1.git
+git branch -M main
+git push -u origin main

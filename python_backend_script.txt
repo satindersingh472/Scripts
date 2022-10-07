@@ -1,14 +1,15 @@
 mkdir $1;
 cd $1;
 echo " This is the $1" > readme.txt;
-echo " .vscode
+echo " 
+.vscode
 venv/
 dbcreds.py" > .gitignore;
 echo "
 user = 'root'
 password = 'Sandhu772'
 host = 'localhost'
-port = '3306'
+port = 3306
 database = '$1'" > dbcreds.py;
 echo "
 # import mariadb
@@ -93,18 +94,19 @@ echo "
 # execute and close the connection
 from dbhelpers import conn_exe_close
 # import request, make_response,jsonify from flask
-from flask import make_response, jsonify
+from flask import make_response
+import json
 
 # single function to handle database interactions
 # and based on results will send errors
 def get_display_results(statement,args_list):
     results = conn_exe_close(statement,args_list)
     if(type(results) == list):
-        return make_response(jsonify(results), 200)
+        return make_response(json.dumps(results, default=str), 200)
     elif(type(results) == str):
-        return make_response(jsonify(results), 400)
+        return make_response(json.dumps(results, default=str), 400)
     else:
-        return make_response(jsonify(results) , 500)
+        return make_response(json.dumps(results, default=str) , 500)
 
 # will verifiy end points arguments for presence
 # if necessary arguments not sent then remind the user to send
@@ -115,8 +117,9 @@ def verify_endpoints_info(sent_data,required_args):
 
 echo "
 from dbhelpers import conn_exe_close
-from apihelpers import get_display_results, verify_enpoints_info
-from flask import Flask, request, make_response, jsonify
+from apihelpers import get_display_results, verify_endpoints_info
+from flask import Flask, request, make_response
+import json
 
 app = Flask(__name__)
 

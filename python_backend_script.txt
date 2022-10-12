@@ -10,7 +10,8 @@ user = 'root'
 password = 'Sandhu772'
 host = 'localhost'
 port = 3306
-database = '$1'" > dbcreds.py;
+database = '$1'
+production_mode = False " > dbcreds.py;
 echo "
 # import mariadb
 import mariadb
@@ -102,8 +103,12 @@ import json
 def get_display_results(statement,args_list):
     results = conn_exe_close(statement,args_list)
     if(type(results) == list):
+        if(len(results) == 0):
+            return 'No Results matched your input'
         return make_response(json.dumps(results, default=str), 200)
     elif(type(results) == str):
+        if(results.startswith('Duplicate entry')):
+            return 'Duplicate data already exists, please change values and try again'
         return make_response(json.dumps(results, default=str), 400)
     else:
         return make_response(json.dumps(results, default=str) , 500)
@@ -120,14 +125,24 @@ from dbhelpers import conn_exe_close
 from apihelpers import get_display_results, verify_endpoints_info
 from flask import Flask, request, make_response
 import json
+import dbcreds
 
 app = Flask(__name__)
 
-app.run(debug=True)" > app.py;
+if(dbcreds.production_mode == True):
+    print('Running in PRODUCTION MODE')
+    app.run(debug=True)
+else:
+    from flask_cors import CORS
+    CORS(app)
+    print('Running in TESTING MODE')
+    app.run(debug=True)
+
+" > app.py;
 
 python3 -m venv venv;
 source venv/bin/activate;
-pip install mariadb flask;
+pip install mariadb flask flask-cors;
 git init;
 git add -A;
 git commit -m"started the project $1";

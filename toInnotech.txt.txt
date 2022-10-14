@@ -1,2 +1,0 @@
-echo "I will show you the way!!";
-echo " TO access the Innotech folder you would need to go to : /c/user/satinder/desktop/Innotech/";

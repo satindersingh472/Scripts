@@ -2,6 +2,7 @@ mkdir $1;
 cd $1;
 echo " This is the $1" > readme.txt;
 echo " 
+__pycache__
 .vscode
 venv/
 dbcreds.py" > .gitignore;
@@ -143,6 +144,7 @@ else:
 python3 -m venv venv;
 source venv/bin/activate;
 pip install mariadb flask flask-cors;
+pip freeze > requirements.txt
 git init;
 git add -A;
 git commit -m"started the project $1";

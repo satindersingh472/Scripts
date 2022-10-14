@@ -1,0 +1,25 @@
+vue create $1;
+cd $1;
+echo "
+VUE_APP_BASE_DOMAIN='http://localhost:5000'
+" > .env.development;
+echo "
+VUE_APP_BASE_DOMAIN=''
+" > .env.production;
+echo "
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true,
+  configureWebpack:{
+    devtool: 'source-map'
+  }
+})
+" > vue.config.js;
+git init;
+git add -A;
+git commit -m"started the $1 " ;
+git remote add origin https://github.com/satindersingh472/$1.git;
+git branch -M main ;
+git push -u origin main;
+code .
+

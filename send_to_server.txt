@@ -1,0 +1,1 @@
+scp -i ~/.ssh/oracle_key -r dist/ opc@129.146.136.125:/home/opc/projects/$1

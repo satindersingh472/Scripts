@@ -8,7 +8,7 @@ venv/
 dbcreds.py" > .gitignore;
 echo "
 user = 'root'
-password = '$2'
+password = 'change_this_password'
 host = 'localhost'
 port = 3306
 database = '$1'

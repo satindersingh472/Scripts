@@ -8,7 +8,7 @@ venv/
 dbcreds.py" > .gitignore;
 echo "
 user = 'root'
-password = 'Sandhu772'
+password = '$2'
 host = 'localhost'
 port = 3306
 database = '$1'
@@ -92,27 +92,21 @@ def conn_exe_close(statement,list):
 " > dbhelpers.py;
 
 echo "
-# import single function from dbhelpers to connect
-# execute and close the connection
-from dbhelpers import conn_exe_close
-# import request, make_response,jsonify from flask
-from flask import make_response
-import json
 
-# single function to handle database interactions
-# and based on results will send errors
-def get_display_results(statement,args_list):
-    results = conn_exe_close(statement,args_list)
-    if(type(results) == list):
-        if(len(results) == 0):
-            return 'No Results matched your input'
-        return results
-    elif(type(results) == str):
-        if(results.startswith('Duplicate entry')):
-            return 'Duplicate data already exists, please change values and try again'
-        return make_response(json.dumps(results, default=str), 400)
-    else:
-        return make_response(json.dumps(results, default=str) , 500)
+# will use this function to check the data sent for patch
+# if all arguments or data is not sent then it will append
+# data from the got_data array and we can use that to send a request
+def add_for_patch(sent_data,required_args,got_data):
+    count = 0
+    object = {}
+    for data in required_args:
+        if(sent_data.get(data) == None):
+            object[data] = got_data[count]
+        elif(sent_data.get(data) != None):
+            object[data] = sent_data.get(data)
+        count += 1
+    
+    return object
 
 # will verifiy end points arguments for presence
 # if necessary arguments not sent then remind the user to send
@@ -123,7 +117,7 @@ def verify_endpoints_info(sent_data,required_args):
 
 echo "
 from dbhelpers import conn_exe_close
-from apihelpers import get_display_results, verify_endpoints_info
+from apihelpers import verify_endpoints_info, add_for_patch
 from flask import Flask, request, make_response
 import json
 import dbcreds
@@ -131,8 +125,9 @@ import dbcreds
 app = Flask(__name__)
 
 if(dbcreds.production_mode == True):
+    import bjoern #type: ignore
+    bjoern.run(app,'0.0.0.0',5000)
     print('Running in PRODUCTION MODE')
-    app.run(debug=True)
 else:
     from flask_cors import CORS
     CORS(app)

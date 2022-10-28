@@ -86,27 +86,30 @@ def conn_exe_close(statement,list):
     cursor = connect_db()
     if(cursor == None):
         return 'Connection Error'
-    result = execute_statement(cursor,statement,list)
+    results = execute_statement(cursor,statement,list)
+    results = make_dictionary(results,cursor)
     close_connection(cursor)
     return result
+
+# it will convert list into a dictionary from the response
+def make_dictionary(results,cursor):
+    columns = [i[0] for i in cursor.description]
+    new_results = []
+    for row in results:
+        new_results.append(dict(zip(columns,row)))
+    return new_results
+
 " > dbhelpers.py;
 
 echo "
 
-# will use this function to check the data sent for patch
-# if all arguments or data is not sent then it will append
-# data from the got_data array and we can use that to send a request
-def add_for_patch(sent_data,required_args,got_data):
-    count = 0
-    object = {}
+# the following function will over write the new data that has passed by user with the original data in the request
+def add_for_patch(sent_data,required_args,original_data):
     for data in required_args:
-        if(sent_data.get(data) == None):
-            object[data] = got_data[count]
-        elif(sent_data.get(data) != None):
-            object[data] = sent_data.get(data)
-        count += 1
+        if(sent_data.get(data) != None):
+            original_data[data] = sent_data[data]
+    return original_data
     
-    return object
 
 # will verifiy end points arguments for presence
 # if necessary arguments not sent then remind the user to send

@@ -1,0 +1,88 @@
+echo "";
+printf "creating a web server with apache 2.4";
+echo "";
+
+BLINKGREEN='\033[32;5m';
+BLINKEND='\033[0m';
+GREEN='\033[0;32m';
+RED='\033[0;31m';
+YELLOW='\033[0;33m';
+WHITE='\033[0;37m';
+
+echo "";
+echo -e "${BLINKGREEN}UPDATING${BLINKEND}";
+echo "";
+
+sudo apt update
+
+echo "";
+echo -e "${BLINKGREEN} Installing firewalld ${BLINKEND}";
+echo "";
+
+echo "";
+echo -e "${BLINKGREEN}Adding extra spaces${BLINKEND}";
+
+sudo dd iflag=direct if=/dev/sda of=/dev/null count=1
+echo "1" | sudo tee /sys/class/block/sda/device/rescan
+#/usr/libexec/oci-growfs -y
+
+echo "";
+echo -e "${BLINKGREEN}Installing Apache${BLINKEND}";
+
+sudo apt install apache2
+sudo service apache2 start
+
+sudo apt update
+sudo apt install dirmngr unzip wget
+
+sudo apt update
+echo -e "${BLINKGREEN}Installing mariadb with repository configuration ${BLINKEND}
+sudo apt-get install apt-transport-https
+sudo mkdir -p /etc/apt/keyrings
+sudo curl -o /etc/apt/keyrings/mariadb-keyring.pgp 'https://mariadb.org/mariadb_release_signing_key.pgp'
+
+echo "# MariaDB 11.0 repository list - created 2023-08-24 00:34 UTC
+# https://mariadb.org/download/
+# deb.mariadb.org is a dynamic mirror if your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ for details.
+# deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://deb.mariadb.org/11.0/ubuntu bionic main
+deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirrors.xtom.com/mariadb/repo/11.0/ubuntu bionic main
+# deb-src [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirrors.xtom.com/mariadb/repo/11.0/ubuntu bionic main" > /etc/apt/sources.list.d/mariadb.list
+
+sudo apt-get update
+sudo apt-get install mariadb-server galera-4 mariadb-client libmariadb3 mariadb-backup mariadb-common
+
+
+#dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm;
+#dnf config-manager --set-enabled PowerTools;
+#dnf install -y certbot python3-certbot-apache glances libev-devel;
+
+sudo apt update
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+nvm install v16.20.2 && npm install pm2 -g
+
+
+echo "";
+echo -e "${BLINKGREEN}MAKING EASY ACCESS SYMLINKS${BLINKEND}";
+echo "";
+
+
+echo "";
+echo -e "${BLINKGREEN}OPENING PORTS IN FIREWALL${BLINKEND}";
+echo "";
+
+sudo firewall-cmd --zone=public --permanent --add-port=80/tcp;
+sudo firewall-cmd --zone=public --permanent --add-port=443/tcp;
+sudo firewall-cmd --zone=public --permanent --add-port=3000/tcp;
+sudo firewall-cmd --zone=public --permanent --add-port 5000-6000/tcp;
+sudo firewall-cmd --reload;
+
+
+
+echo "";
+echo -e "${BLINKGREEN}INSTALLATION FINISHED! PLEASE READ BELOW${BLINKEND}";
+echo "";
+echo -e "${YELLOW}Well done, the installation is complete.";
+echo -e "${GREEN}You're all set!";
+echo -e "";
+echo -e "${WHITE}----------";
+echo -e "";

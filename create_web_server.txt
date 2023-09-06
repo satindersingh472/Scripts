@@ -61,6 +61,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 nvm install v16.20.2 && npm install pm2 -g
 
 
+
 echo "";
 echo -e "${BLINKGREEN}MAKING EASY ACCESS SYMLINKS${BLINKEND}";
 echo "";

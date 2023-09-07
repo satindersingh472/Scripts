@@ -1,1 +1,1 @@
-scp -i ~/.ssh/rest-o-pain-oracle-key -r dist/* ubuntu@158.101.30.102:home/ubuntu/projects
+scp -i ~/.ssh/rest-o-pain-oracle-key -r dist/* ubuntu@158.101.47.3:home/ubuntu/projects/$1

@@ -35,6 +35,8 @@ sudo service apache2 start
 sudo apt update
 sudo apt install dirmngr unzip wget
 
+
+
 sudo apt update
 echo -e "${BLINKGREEN}Installing mariadb with repository configuration ${BLINKEND}
 sudo apt-get install apt-transport-https
@@ -50,6 +52,12 @@ deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirrors.xtom.com/m
 
 sudo apt-get update
 sudo apt-get install mariadb-server galera-4 mariadb-client libmariadb3 mariadb-backup mariadb-common
+
+sudo apt update
+sudo apt install python3-dev
+sudo apt install openssl
+sudo apt install libmariadb3 libmariadb-dev
+
 
 
 #dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm;

@@ -58,6 +58,8 @@ sudo apt install python3-dev
 sudo apt install openssl
 sudo apt install libmariadb3 libmariadb-dev
 
+sudo apt-get update
+sudo apt-get libev-dev
 
 
 #dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm;

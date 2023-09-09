@@ -89,6 +89,8 @@ sudo firewall-cmd --zone=public --permanent --add-port 5000-6000/tcp;
 sudo firewall-cmd --reload;
 
 
+sudo mariadb-secure-installation
+ 
 
 echo "";
 echo -e "${BLINKGREEN}INSTALLATION FINISHED! PLEASE READ BELOW${BLINKEND}";

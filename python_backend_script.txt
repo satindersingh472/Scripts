@@ -143,9 +143,4 @@ python3 -m venv venv;
 source venv/bin/activate;
 pip install mariadb flask flask-cors;
 pip freeze > requirements.txt
-git init;
-git add -A;
-git commit -m"started the project $1";
-git remote add origin https://github.com/satindersingh472/$1.git
-git branch -M main
-git push -u origin main
+bash create_github $1

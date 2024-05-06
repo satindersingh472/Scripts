@@ -1,3 +1,3 @@
 echo " please add directory/file for $1 place and it will send the data to /root/(specify place with $2)"
 
-scp -i ~/.ssh/digital-ocean-key -r ./.output root@137.184.169.191:/root/projects/$1
+scp -i ~/.ssh/digital-ocean-key -r ./.output root@146.190.252.221:/root/projects/$1
